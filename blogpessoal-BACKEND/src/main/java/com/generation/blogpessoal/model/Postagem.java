@@ -6,11 +6,14 @@ import javax.persistence.Entity; //sempre importar
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.UpdateTimestamp; //Hibernate é uma biblioteca
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 //anotações
 @Entity //Transforma aclasse em uma tabela/entidade
 @Table(name = "tb_postagem") //Vamos renomear a tabela, e o nome nesse caso é tb_postagem
@@ -31,6 +34,17 @@ public class Postagem {
 	private String texto;
 	@UpdateTimestamp //atualiza a data e hora conforme o sistema da pessoa que utilizar
 	private LocalDateTime data;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Tema tema;
+	
+	public Tema getTema() {
+		return tema;
+	}
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
 	public Long getId() {
 		return id;
 	}
